@@ -115,7 +115,7 @@ The following screenshots demonstrate the application's interface and validation
 
 **7. Successful Validation**
 
-![Successful Form Validation](https://github.com/user-attachments/assets/c3bb31e1-af43-49ef-9ef4-34c9e8be7ae8)
+![image](https://github.com/user-attachments/assets/c3bb31e1-af43-49ef-9e34-9dc8e8be7ae8)
 
 ## 04. Installation & Usage
 
