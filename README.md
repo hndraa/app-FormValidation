@@ -52,15 +52,17 @@ The following screenshots demonstrate the application's interface and validation
 
 **1. Empty Form**
 
+<img width="400" height="382" alt="image" src="https://github.com/user-attachments/assets/86b691b2-ab85-408b-96bb-b0b9472ff96a" />
 
 
 **2. Invalid Email Format**
 
-![Invalid Email Validation](https://github.com/user-attachments/assets/f6c54cd9-cb6b-48b5-ad12-72e9e71360e6)
+<img width="400" height="378" alt="image" src="https://github.com/user-attachments/assets/c481b086-fa64-44cc-a186-2a445ee0d736" />
+
 
 **3. Invalid Age Format**
 
-![Invalid Age Validation](https://github.com/user-attachments/assets/c10da726-c8bc-4bd3-bec9-8c103d66f206)
+<img width="400" height="378" alt="image" src="https://github.com/user-attachments/assets/eecc73bf-9094-4417-8c48-410f530d3cdd" />
 
 **4. Invalid Phone Number Length**
 
@@ -68,15 +70,17 @@ The following screenshots demonstrate the application's interface and validation
 
 **5. Invalid Phone Number Prefix**
 
-![Invalid Phone Number Prefix](https://github.com/user-attachments/assets/e0c2820e-81d0-481d-9471-ead799f23fc0)
+<img width="401" height="381" alt="image" src="https://github.com/user-attachments/assets/ac49dd57-05a3-4a49-81ab-76c85d4c281c" />
 
 **6. Invalid Gender Selection**
 
-![Invalid Gender Selection](https://github.com/user-attachments/assets/2f559d4a-7021-4fe2-8b72-8d9b8184b476)
+<img width="399" height="380" alt="image" src="https://github.com/user-attachments/assets/c8c899d7-6f75-4f91-9316-bb4d1feb95c1" />
+
 
 **7. Successful Validation**
 
-![image](https://github.com/user-attachments/assets/c3bb31e1-af43-49ef-9e34-9dc8e8be7ae8)
+<img width="399" height="377" alt="image" src="https://github.com/user-attachments/assets/7bc59578-dd38-4b5d-af51-cd9df22c45ae" />
+
 
 ## 04. Installation & Usage
 
@@ -91,32 +95,22 @@ The following screenshots demonstrate the application's interface and validation
 app-form-validation/
 ├── main.py
 ├── form_validation.ui
-├── requirements.txt
-├── README.md
-└── screenshots/
+└── README.md 
 ```
-
-The `screenshots/` directory is optional if the screenshots are hosted directly on GitHub, as in the examples above.
 
 ### Installation
 
 **1. Clone the repository**
 
 ```bash
-git clone https://github.com/hndraa/app-form-validation.git
-cd app-form-validation
+git clone https://github.com/hndraa/app-FormValidation.git
+cd app-FormValidation
 ```
 
 **2. Install dependencies**
 
 ```bash
-python -m pip install -r requirements.txt
-```
-
-The `requirements.txt` file should contain:
-
-```text
-PyQt5
+python -m pip install PyQt5
 ```
 
 **3. Run the application**
