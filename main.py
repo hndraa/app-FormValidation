@@ -9,44 +9,45 @@ class FormValidationApp(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Memuat desain dari Qt Designer
+        # Load the user interface designed with Qt Designer
         uic.loadUi("form_validation.ui", self)
 
-        # Placeholder dropdown
+        # Configure gender dropdown options
         self.genderDropdown.clear()
         self.genderDropdown.addItems([
-            "Pilih jenis kelamin",
-            "Laki-laki",
-            "Perempuan",
-            "Tidak ingin memberi tahu"
+            "Select gender",
+            "Male",
+            "Female",
+            "Prefer not to say"
         ])
 
+        # Configure education dropdown options
         self.educationDropdown.clear()
         self.educationDropdown.addItems([
-            "Pilih pendidikan",
-            "SMA",
+            "Select education",
+            "High School",
             "Diploma",
-            "S1",
-            "S2",
-            "S3"
+            "Bachelor's Degree",
+            "Master's Degree",
+            "Doctoral Degree"
         ])
 
-        # Format nomor HP: +62 812 3456 7890
+        # Configure the phone number input mask
         self.phoneInput.setInputMask("+62 000 0000 0000;_")
 
-        # Menghubungkan tombol
+        # Connect buttons to their respective functions
         self.saveButton.clicked.connect(self.validate_form)
         self.clearButton.clicked.connect(self.clear_form)
 
-        # Shortcut untuk keluar: Ctrl + Q
+        # Configure the Ctrl+Q shortcut to close the application
         self.shortcut = QtWidgets.QShortcut(
             QtGui.QKeySequence("Ctrl+Q"), self
         )
         self.shortcut.activated.connect(self.close)
 
-        # Label identitas
+        # Add the developer identification label
         self.identityLabel = QtWidgets.QLabel(
-            "hndraa Apps", self
+            "hndraa - Apps", self
         )
         self.identityLabel.setAlignment(QtCore.Qt.AlignRight)
         self.identityLabel.setStyleSheet(
@@ -54,68 +55,71 @@ class FormValidationApp(QtWidgets.QMainWindow):
         )
         self.identityLabel.setGeometry(200, 320, 190, 20)
 
-        # Animasi gradien
+        # Initialize the animated gradient background
         self.gradient_position = 0.0
         self.timer = QtCore.QTimer(self)
         self.timer.timeout.connect(self.update_gradient)
         self.timer.start(50)
 
     def show_warning(self, message):
+        """Display a validation warning message."""
         QtWidgets.QMessageBox.warning(
-            self, "Validasi Gagal", message
+            self, "Validation Error", message
         )
 
     def validate_form(self):
+        """Validate all form fields before accepting the input."""
         name = self.nameInput.text().strip()
         email = self.emailInput.text().strip()
         age = self.ageInput.text().strip()
         address = self.addressInput.toPlainText().strip()
 
-        gender = self.genderDropdown.currentIndex()
-        education = self.educationDropdown.currentIndex()
+        gender_index = self.genderDropdown.currentIndex()
+        education_index = self.educationDropdown.currentIndex()
 
-        # Validasi nama dan alamat
+        # Validate name
         if not name:
-            self.show_warning("Nama harus diisi.")
+            self.show_warning("Name is required.")
             self.nameInput.setFocus()
             return
 
+        # Validate address
         if not address:
-            self.show_warning("Alamat harus diisi.")
+            self.show_warning("Address is required.")
             self.addressInput.setFocus()
             return
 
-        # Validasi email
+        # Validate email
         email_pattern = r"^[^@\s]+@[^@\s]+\.[^@\s]+$"
 
         if not email:
-            self.show_warning("Email harus diisi.")
+            self.show_warning("Email address is required.")
             self.emailInput.setFocus()
             return
 
         if not re.fullmatch(email_pattern, email):
-            self.show_warning("Format email tidak valid.")
+            self.show_warning("Please enter a valid email address.")
             self.emailInput.setFocus()
             return
 
-        # Validasi umur
+        # Validate age
         if not age:
-            self.show_warning("Umur harus diisi.")
+            self.show_warning("Age is required.")
             self.ageInput.setFocus()
             return
 
         if not age.isdigit():
-            self.show_warning("Umur harus berupa angka bulat.")
+            self.show_warning("Age must be a whole number.")
             self.ageInput.setFocus()
             return
 
-        if int(age) <= 0 or int(age) > 120:
-            self.show_warning("Umur harus antara 1 dan 120 tahun.")
+        if int(age) < 1 or int(age) > 120:
+            self.show_warning("Age must be between 1 and 120.")
             self.ageInput.setFocus()
             return
 
-        # Validasi nomor HP
-        # Hilangkan karakter selain angka, termasuk +62 dan spasi.
+        # Validate phone number
+        # Remove non-numeric characters, including the country code.
         phone_digits = re.sub(
             r"\D", "", self.phoneInput.text()
         )
@@ -124,45 +128,47 @@ class FormValidationApp(QtWidgets.QMainWindow):
             phone_digits = phone_digits[2:]
 
         if not phone_digits:
-            self.show_warning("Nomor HP harus diisi.")
+            self.show_warning("Phone number is required.")
             self.phoneInput.setFocus()
             return
 
         if len(phone_digits) != 11:
             self.show_warning(
-                "Nomor HP harus memiliki 11 digit setelah +62."
+                "Phone number must contain 11 digits after +62."
             )
             self.phoneInput.setFocus()
             return
 
         if not phone_digits.startswith("8"):
             self.show_warning(
-                "Nomor HP harus diawali angka 8 setelah +62."
+                "Phone number must start with 8 after the +62 prefix."
             )
             self.phoneInput.setFocus()
             return
 
-        # Validasi dropdown
-        if gender == 0:
-            self.show_warning("Silakan pilih jenis kelamin.")
+        # Validate gender selection
+        if gender_index == 0:
+            self.show_warning("Please select a gender.")
             self.genderDropdown.setFocus()
             return
 
-        if education == 0:
-            self.show_warning("Silakan pilih pendidikan.")
+        # Validate education selection
+        if education_index == 0:
+            self.show_warning("Please select an education level.")
             self.educationDropdown.setFocus()
             return
 
-        # Data lolos validasi, belum disimpan secara permanen.
+        # All validation checks have passed
         QtWidgets.QMessageBox.information(
             self,
-            "Validasi Berhasil",
-            "Semua data valid dan siap diproses."
+            "Validation Successful",
+            "All form data is valid and ready to be processed."
         )
 
         self.clear_form()
 
     def clear_form(self):
+        """Clear all input fields and reset dropdown selections."""
         self.nameInput.clear()
         self.emailInput.clear()
         self.ageInput.clear()
@@ -175,6 +181,7 @@ class FormValidationApp(QtWidgets.QMainWindow):
         self.nameInput.setFocus()
 
     def update_gradient(self):
+        """Update the gradient animation position."""
         self.gradient_position += 0.01
 
         if self.gradient_position > 1:
@@ -183,6 +190,7 @@ class FormValidationApp(QtWidgets.QMainWindow):
         self.update()
 
     def paintEvent(self, event):
+        """Draw the animated gradient background."""
         painter = QtGui.QPainter(self)
         rect = self.rect()
 
@@ -190,13 +198,17 @@ class FormValidationApp(QtWidgets.QMainWindow):
             0, 0, rect.width(), rect.height()
         )
 
-        value = int(100 + 100 * self.gradient_position)
+        color_value = int(
+            100 + 100 * self.gradient_position
+        )
 
         gradient.setColorAt(
-            0.0, QtGui.QColor(255, value, 200)
+            0.0,
+            QtGui.QColor(255, color_value, 200)
         )
         gradient.setColorAt(
-            1.0, QtGui.QColor(value, 200, 255)
+            1.0,
+            QtGui.QColor(color_value, 200, 255)
         )
 
         painter.fillRect(rect, gradient)
